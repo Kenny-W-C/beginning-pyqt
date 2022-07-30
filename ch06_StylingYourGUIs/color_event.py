@@ -5,8 +5,10 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
-from PyQt5.QtCore import Qt, pyqtSignal, QObject
+
+from PyQt5.QtCore import QObject, Qt, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
+
 
 class SendSignal(QObject):
     """
@@ -14,11 +16,12 @@ class SendSignal(QObject):
     """
     change_style = pyqtSignal()
 
+
 class Example(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -33,15 +36,17 @@ class Example(QMainWindow):
 
     def setupLabel(self):
         """
-        Create label 
+        Create label
         """
-        self.index = 0 # index of items in list
-        self.direction = "" 
+        self.index = 0  # index of items in list
+        self.direction = ""
 
-        self.colors_list = ["red", "orange", "yellow", "green", "blue", "purple"]
+        self.colors_list = ["red", "orange", "yellow", "green", "blue",
+                            "purple"]
 
         self.label = QLabel()
-        self.label.setStyleSheet("background-color: {}".format(self.colors_list[self.index]))
+        self.label.setStyleSheet(
+            "background-color: {}".format(self.colors_list[self.index]))
         self.setCentralWidget(self.label)
 
         # Create instance of SendSignal class, and
@@ -62,15 +67,18 @@ class Example(QMainWindow):
 
     def changeBackground(self):
         """
-        Change the background of the label widget when a keyPressEvent signal 
+        Change the background of the label widget when a keyPressEvent signal
         is emitted.
         """
         if self.direction == "up" and self.index < len(self.colors_list) - 1:
             self.index = self.index + 1
-            self.label.setStyleSheet("background-color: {}".format(self.colors_list[self.index]))
+            self.label.setStyleSheet(
+                "background-color: {}".format(self.colors_list[self.index]))
         elif self.direction == "down" and self.index > 0:
             self.index = self.index - 1
-            self.label.setStyleSheet("background-color: {}".format(self.colors_list[self.index]))
+            self.label.setStyleSheet(
+                "background-color: {}".format(self.colors_list[self.index]))
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

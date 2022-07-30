@@ -5,10 +5,12 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QStatusBar, QAction, 
-    QTextEdit, QToolBar, QDockWidget)
-from PyQt5.QtCore import Qt, QSize
+
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import (QAction, QApplication, QDockWidget, QMainWindow,
+                             QStatusBar, QTextEdit, QToolBar)
+
 
 class BasicMenu(QMainWindow):
 
@@ -21,7 +23,7 @@ class BasicMenu(QMainWindow):
         """
         Initialize the window and display its contents to the screen
         """
-        self.setGeometry(100, 100, 350, 350) # x, y, width, height 
+        self.setGeometry(100, 100, 350, 350)  # x, y, width, height
         self.setWindowTitle('Basic Menu Example 2')
 
         # set central widget for main window
@@ -44,19 +46,19 @@ class BasicMenu(QMainWindow):
         self.exit_act.triggered.connect(self.close)
 
         # Create actions for view menu
-        full_screen_act = QAction('Full Screen', self, checkable=True)
+        full_screen_act = QAction('Full Screen', self, checkable = True)
         full_screen_act.setStatusTip('Swtich to full screen mode')
         full_screen_act.triggered.connect(self.switchToFullScreen)
 
-        # Create menubar 
+        # Create menubar
         menu_bar = self.menuBar()
         menu_bar.setNativeMenuBar(False)
 
-        # Create file menu and add actions 
+        # Create file menu and add actions
         file_menu = menu_bar.addMenu('File')
         file_menu.addAction(self.exit_act)
 
-        # Create view menu, Appearance submenu and add actions 
+        # Create view menu, Appearance submenu and add actions
         view_menu = menu_bar.addMenu('View')
         appearance_submenu = view_menu.addMenu('Appearance')
         appearance_submenu.addAction(full_screen_act)
@@ -100,6 +102,7 @@ class BasicMenu(QMainWindow):
             self.showFullScreen()
         else:
             self.showNormal()
+
 
 # Run program
 if __name__ == '__main__':

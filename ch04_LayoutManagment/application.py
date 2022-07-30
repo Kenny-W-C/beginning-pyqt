@@ -5,10 +5,13 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, 
-    QFormLayout, QLineEdit, QTextEdit, QSpinBox, QComboBox, QHBoxLayout)
-from PyQt5.QtGui import QFont
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout,
+                             QLabel, QLineEdit, QPushButton, QSpinBox,
+                             QTextEdit, QWidget)
+
 
 class GetApptForm(QWidget):
     def __init__(self):
@@ -28,14 +31,14 @@ class GetApptForm(QWidget):
 
     def formWidgets(self):
         """
-        Create widgets that will be used in the application form. 
+        Create widgets that will be used in the application form.
         """
         # create widgets
         title = QLabel("Appointment Submission Form")
         title.setFont(QFont('Arial', 18))
         title.setAlignment(Qt.AlignCenter)
 
-        name = QLineEdit() 
+        name = QLineEdit()
         name.resize(100, 100)
         address = QLineEdit()
         mobile_num = QLineEdit()
@@ -58,7 +61,7 @@ class GetApptForm(QWidget):
         surgery.setPlaceholderText("separate by ','")
         blood_type = QComboBox()
         blood_type.addItems(["A", "B", "AB", "O"])
-        
+
         hours = QSpinBox()
         hours.setRange(1, 12)
         minutes = QComboBox()
@@ -71,7 +74,7 @@ class GetApptForm(QWidget):
 
         # create horizontal layout and add age, height and weight to h_box
         h_box = QHBoxLayout()
-        #h_box.setContentsMargins(100,100,100,100)
+        # h_box.setContentsMargins(100,100,100,100)
         h_box.addSpacing(10)
         h_box.addWidget(age_label)
         h_box.addWidget(age)
@@ -87,7 +90,7 @@ class GetApptForm(QWidget):
         desired_time_h_box.addWidget(minutes)
         desired_time_h_box.addWidget(am_pm)
 
-        # create form layout 
+        # create form layout
         app_form_layout = QFormLayout()
 
         # add all widgets to form layout
@@ -103,6 +106,7 @@ class GetApptForm(QWidget):
         app_form_layout.addRow(submit_button)
 
         self.setLayout(app_form_layout)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

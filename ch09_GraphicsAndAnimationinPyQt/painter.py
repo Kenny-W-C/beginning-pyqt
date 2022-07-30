@@ -4,24 +4,28 @@ written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
-import os, sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QAction, 
-    QLabel, QToolBar, QStatusBar, QToolTip, QColorDialog, QFileDialog)
-from PyQt5.QtGui import (QPainter, QPixmap, QPen, QColor, QIcon, QFont)
-from PyQt5.QtCore import Qt, QSize, QPoint, QRect
+import os
+import sys
+
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt
+from PyQt5.QtGui import (QColor, QFont, QIcon, QPainter, QPen, QPixmap)
+from PyQt5.QtWidgets import (QAction, QApplication, QColorDialog, QFileDialog,
+                             QLabel, QMainWindow, QStatusBar, QToolBar,
+                             QToolTip)
+
 
 # Creates widget to be drawn on.
 class Canvas(QLabel):
-    
+
     def __init__(self, parent):
         super().__init__(parent)
-        width, height = 900, 600 
+        width, height = 900, 600
 
         self.parent = parent
         self.parent.setFixedSize(width, height)
 
         # Create pixmap object that will act as the canvas
-        pixmap = QPixmap(width, height) # width, height
+        pixmap = QPixmap(width, height)  # width, height
         pixmap.fill(Qt.white)
         self.setPixmap(pixmap)
 
@@ -68,7 +72,8 @@ class Canvas(QLabel):
             self.drawOnCanvas(mouse_pos)
 
         self.mouse_track_label.setVisible(True)
-        sb_text = "Mouse Coordinates: ({}, {})".format(mouse_pos.x(), mouse_pos.y())
+        sb_text = "Mouse Coordinates: ({}, {})".format(mouse_pos.x(),
+                                                       mouse_pos.y())
         self.mouse_track_label.setText(sb_text)
         self.parent.status_bar.addWidget(self.mouse_track_label)
 
@@ -88,8 +93,8 @@ class Canvas(QLabel):
 
             # Update the mouse's position for next movement
             self.last_mouse_pos = points
-        elif self.eraser_selected == True:  
-            # Use the eraser 
+        elif self.eraser_selected == True:
+            # Use the eraser
             eraser = QRect(points.x(), points.y(), 12, 12)
             painter.eraseRect(eraser)
 
@@ -98,7 +103,7 @@ class Canvas(QLabel):
 
     def newCanvas(self):
         """
-        Clears the current canvas. 
+        Clears the current canvas.
         """
         self.pixmap().fill(Qt.white)
         self.update()
@@ -109,12 +114,13 @@ class Canvas(QLabel):
         """
         file_format = "png"
         default_name = os.path.curdir + "/untitled." + file_format
-        file_name, _ = QFileDialog.getSaveFileName(self, "Save As", 
-                    default_name, "PNG Format (*.png)")
+        file_name, _ = QFileDialog.getSaveFileName(self, "Save As",
+                                                   default_name,
+                                                   "PNG Format (*.png)")
 
         if file_name:
             self.pixmap().save(file_name, file_format)
-    
+
     def mousePressEvent(self, event):
         """
         Handle when mouse is pressed.
@@ -145,18 +151,19 @@ class Canvas(QLabel):
         target_rect = event.rect()
         painter.drawPixmap(target_rect, self.pixmap(), target_rect)
 
+
 class PainterWindow(QMainWindow):
 
     def __init__(self):
-        super().__init__() 
+        super().__init__()
 
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
         Initialize the window and display its contents to the screen. 
         """
-        #self.setMinimumSize(700, 600)
+        # self.setMinimumSize(700, 600)
         self.setWindowTitle('9.1 – Painter GUI')
 
         QToolTip.setFont(QFont('Helvetica', 12))
@@ -194,7 +201,7 @@ class PainterWindow(QMainWindow):
         quit_act.triggered.connect(self.close)
 
         # Create tool menu actions
-        anti_al_act = QAction('AntiAliasing', self, checkable=True)
+        anti_al_act = QAction('AntiAliasing', self, checkable = True)
         anti_al_act.triggered.connect(self.turnAntialiasingOn)
 
         # Create the menu bar
@@ -228,19 +235,24 @@ class PainterWindow(QMainWindow):
         # Create actions and tooltips and add them to the toolbar
         pencil_act = QAction(QIcon("icons/pencil.png"), 'Pencil', tool_bar)
         pencil_act.setToolTip('This is the <b>Pencil</b>.')
-        pencil_act.triggered.connect(lambda: self.canvas.selectDrawingTool("pencil"))
+        pencil_act.triggered.connect(
+            lambda: self.canvas.selectDrawingTool("pencil"))
 
         marker_act = QAction(QIcon("icons/marker.png"), 'Marker', tool_bar)
         marker_act.setToolTip('This is the <b>Marker</b>.')
-        marker_act.triggered.connect(lambda: self.canvas.selectDrawingTool("marker"))
+        marker_act.triggered.connect(
+            lambda: self.canvas.selectDrawingTool("marker"))
 
         eraser_act = QAction(QIcon("icons/eraser.png"), "Eraser", tool_bar)
-        eraser_act.setToolTip('Use the <b>Eraser</b> to make it all disappear.')
-        eraser_act.triggered.connect(lambda: self.canvas.selectDrawingTool("eraser"))
+        eraser_act.setToolTip(
+            'Use the <b>Eraser</b> to make it all disappear.')
+        eraser_act.triggered.connect(
+            lambda: self.canvas.selectDrawingTool("eraser"))
 
         color_act = QAction(QIcon("icons/colors.png"), "Colors", tool_bar)
         color_act.setToolTip('Choose a <b>Color</b> from the Color dialog.')
-        color_act.triggered.connect(lambda: self.canvas.selectDrawingTool("color"))
+        color_act.triggered.connect(
+            lambda: self.canvas.selectDrawingTool("color"))
 
         tool_bar.addAction(pencil_act)
         tool_bar.addAction(marker_act)
@@ -258,11 +270,12 @@ class PainterWindow(QMainWindow):
 
     def leaveEvent(self, event):
         """
-        QEvent class that is called when mouse leaves screen's space. 
-        Hide mouse coordinates in status bar if mouse leaves 
+        QEvent class that is called when mouse leaves screen's space.
+        Hide mouse coordinates in status bar if mouse leaves
         the window.
         """
         self.canvas.mouse_track_label.setVisible(False)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

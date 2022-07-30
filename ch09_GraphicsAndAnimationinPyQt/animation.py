@@ -5,13 +5,15 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QGraphicsView, QGraphicsScene,
-    QGraphicsPixmapItem)
-from PyQt5.QtCore import (QObject, QPointF, QRectF, 
-    QPropertyAnimation, pyqtProperty)
-from PyQt5.QtGui import QPixmap
 
-# Create Objects class that defines the position property of 
+from PyQt5.QtCore import (QObject, QPointF, QPropertyAnimation, QRectF,
+                          pyqtProperty)
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import (QApplication, QGraphicsPixmapItem, QGraphicsScene,
+                             QGraphicsView)
+
+
+# Create Objects class that defines the position property of
 # instances of the class using pyqtProperty.
 class Objects(QObject):
 
@@ -25,13 +27,14 @@ class Objects(QObject):
     def _set_position(self, position):
         self.item.setPos(position)
 
-    position = pyqtProperty(QPointF, fset=_set_position)
+    position = pyqtProperty(QPointF, fset = _set_position)
+
 
 class AnimationScene(QGraphicsView):
 
     def __init__(self):
-        super().__init__() 
-        self.initializeView() 
+        super().__init__()
+        self.initializeView()
 
     def initializeView(self):
         """
@@ -76,7 +79,7 @@ class AnimationScene(QGraphicsView):
         self.tree_anim.setKeyValueAt(0.6, QPointF(150, 150))
         self.tree_anim.setEndValue(QPointF(-150, 150))
 
-        # Add animations to the animations list, and start the 
+        # Add animations to the animations list, and start the
         # animations once the program begins running.
         animations.append(self.car_anim)
         animations.append(self.tree_anim)
@@ -100,10 +103,11 @@ class AnimationScene(QGraphicsView):
         Reimplement QGraphicsView's drawBackground() method.
         """
         scene_rect = self.scene.sceneRect()
-        
+
         background = QPixmap("images/highway.jpg")
         bg_rectf = QRectF(background.rect())
         painter.drawPixmap(scene_rect, background, bg_rectf)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

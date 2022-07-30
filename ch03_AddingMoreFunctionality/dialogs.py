@@ -5,16 +5,18 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-    QMessageBox, QLineEdit, QPushButton)
+
 from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMessageBox,
+                             QPushButton, QWidget)
+
 
 class DisplayMessageBox(QWidget):
 
     def __init__(self):
         super().__init__()
 
-        self.initializeUI() # call our function use to set up window
+        self.initializeUI()  # call our function use to set up window
 
     def initializeUI(self):
         """
@@ -28,13 +30,14 @@ class DisplayMessageBox(QWidget):
 
     def displayWidgets(self):
         """
-        Set up the widgets. 
+        Set up the widgets.
         """
         catalogue_label = QLabel("Author Catalogue", self)
         catalogue_label.move(20, 20)
         catalogue_label.setFont(QFont('Arial', 20))
 
-        auth_label = QLabel("Enter the name of the author you are searching for:", self)
+        auth_label = QLabel(
+            "Enter the name of the author you are searching for:", self)
         auth_label.move(40, 60)
 
         # create author label and line edit widgets
@@ -60,29 +63,36 @@ class DisplayMessageBox(QWidget):
         """
         # check if authors.txt exists
         try:
-            with open("files/authors.txt", "r") as f:    
+            with open("files/authors.txt", "r") as f:
                 # read each line into a list
                 authors = [line.rstrip('\n') for line in f]
         except FileNotFoundError:
             print("The file cannot be found.")
 
         # check for name in list
-        not_found_msg = QMessageBox() # create not_found_msg object to avoid it
-                                      # referenced before assignment error
+        not_found_msg = QMessageBox()  # create not_found_msg object to
+        # avoid it
+        # referenced before assignment error
 
         if self.auth_entry.text() in authors:
-            QMessageBox().information(self, "Author Found", 
-                "Author found in catalogue!", QMessageBox.Ok, QMessageBox.Ok) 
+            QMessageBox().information(self, "Author Found",
+                                      "Author found in catalogue!",
+                                      QMessageBox.Ok, QMessageBox.Ok)
         else:
             not_found_msg = QMessageBox.question(self, "Author Not Found",
-                "Author not found in catalogue.\nDo you wish to continue?",
-                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            
+                                                 "Author not found in "
+                                                 "catalogue.\nDo you wish to "
+                                                 "continue?",
+                                                 QMessageBox.Yes |
+                                                 QMessageBox.No,
+                                                 QMessageBox.No)
+
         if not_found_msg == QMessageBox.No:
             print("Closing application.")
             self.close()
         else:
             pass
+
 
 # Run program
 if __name__ == '__main__':

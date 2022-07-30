@@ -5,10 +5,11 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-    QSlider, QSpinBox, QHBoxLayout, QVBoxLayout, QGridLayout)
-from PyQt5.QtGui import QImage, QPixmap, QColor, qRgb, QFont
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QFont, QImage, QPixmap, qRgb
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+                             QSlider, QSpinBox, QVBoxLayout, QWidget)
 
 style_sheet = """
     QSlider:groove:horizontal{
@@ -50,7 +51,7 @@ style_sheet = """
             stop:0 #FFFFFF, stop:1 #DDDDDD);
         border: 1px solid #393838;
         border-radius: 4px;
-    }  
+    }
 
     QSlider#Green:sub-page:horizontal{
         background: qlineargradient(x1: 1, y1: 0, x2: 0, y2: 1,
@@ -60,7 +61,7 @@ style_sheet = """
         border: 1px solid #4C4B4B;
         height: 10px;
         border-radius: 4px;
-    } 
+    }
 
     QSlider#Blue:sub-page:horizontal{
         background: qlineargradient(x1: 1, y1: 0, x2: 0, y2: 1,
@@ -70,16 +71,17 @@ style_sheet = """
         border: 1px solid #4C4B4B;
         height: 10px;
         border-radius: 4px;
-    } 
+    }
 """
+
 
 class RGBSlider(QWidget):
 
-    def __init__(self, _image=None, *args, **kwargs):
-        super().__init__(*args, **kwargs) 
+    def __init__(self, _image = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._image = _image
 
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -88,7 +90,7 @@ class RGBSlider(QWidget):
         self.setMinimumSize(225, 300)
         self.setWindowTitle('9.3 - RGB Slider')
 
-        # Store the current pixel value 
+        # Store the current pixel value
         self.current_val = QColor()
 
         self.setupWidgets()
@@ -161,7 +163,7 @@ class RGBSlider(QWidget):
         grid.addWidget(hex_container, 6, 0, 1, 0)
 
         # Use [] to pass arguments to the valueChanged signal
-        # The sliders and spinboxes for each color should display the 
+        # The sliders and spinboxes for each color should display the
         # same values and be updated at the same time.
         self.red_slider.valueChanged['int'].connect(self.updateRedSpinBox)
         self.red_spinbox.valueChanged['int'].connect(self.updateRedSlider)
@@ -183,11 +185,11 @@ class RGBSlider(QWidget):
         self.setLayout(v_box)
 
     # The following methods update the red, green and blue
-    # sliders and spinboxes. 
+    # sliders and spinboxes.
     def updateRedSpinBox(self, value):
         self.red_spinbox.setValue(value)
         self.redValue(value)
-        
+
     def updateRedSlider(self, value):
         self.red_slider.setValue(value)
         self.redValue(value)
@@ -195,7 +197,7 @@ class RGBSlider(QWidget):
     def updateGreenSpinBox(self, value):
         self.green_spinbox.setValue(value)
         self.greenValue(value)
-        
+
     def updateGreenSlider(self, value):
         self.green_slider.setValue(value)
         self.greenValue(value)
@@ -203,22 +205,25 @@ class RGBSlider(QWidget):
     def updateBlueSpinBox(self, value):
         self.blue_spinbox.setValue(value)
         self.blueValue(value)
-        
+
     def updateBlueSlider(self, value):
         self.blue_slider.setValue(value)
         self.blueValue(value)
 
     # Create new colors based upon the changes to the RGB values
     def redValue(self, value):
-        new_color = qRgb(value, self.current_val.green(), self.current_val.blue())
+        new_color = qRgb(value, self.current_val.green(),
+                         self.current_val.blue())
         self.updateColorInfo(new_color)
 
     def greenValue(self, value):
-        new_color = qRgb(self.current_val.red(), value, self.current_val.blue())
+        new_color = qRgb(self.current_val.red(), value,
+                         self.current_val.blue())
         self.updateColorInfo(new_color)
 
     def blueValue(self, value):
-        new_color = qRgb(self.current_val.red(), self.current_val.green(), value)
+        new_color = qRgb(self.current_val.red(), self.current_val.green(),
+                         value)
         self.updateColorInfo(new_color)
 
     def updateColorInfo(self, color):
@@ -233,16 +238,18 @@ class RGBSlider(QWidget):
 
     def getPixelValues(self, event):
         """
-        The method reimplements the mousePressEvent method. 
-        To use, set an widget's mousePressEvent equal to getPixelValues, like so:
+        The method reimplements the mousePressEvent method.
+        To use, set an widget's mousePressEvent equal to getPixelValues,
+        like so:
             image_label.mousePressEvent = rgb_slider.getPixelValues
-        If an _image != None, then the user can select pixels in the images, 
-        and update the sliders to get view the color, and get the rgb and hex values. 
+        If an _image != None, then the user can select pixels in the images,
+        and update the sliders to get view the color, and get the rgb and
+        hex values.
         """
         x = event.x()
-        y = event.y() 
+        y = event.y()
 
-        # valid() returns true if the point selected is a valid 
+        # valid() returns true if the point selected is a valid
         # coordinate pair within the image
         if self._image.valid(x, y):
             self.current_val = QColor(self._image.pixel(x, y))
@@ -257,6 +264,7 @@ class RGBSlider(QWidget):
             self.updateGreenSlider(green_val)
             self.updateBlueSpinBox(blue_val)
             self.updateBlueSlider(blue_val)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

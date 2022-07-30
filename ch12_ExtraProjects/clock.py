@@ -5,15 +5,16 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-    QFrame, QVBoxLayout)
-from PyQt5.QtCore import Qt, QDateTime, QDate, QTime, QTimer
+
+from PyQt5.QtCore import QDate, QTime, QTimer, Qt
+from PyQt5.QtWidgets import (QApplication, QLabel, QVBoxLayout, QWidget)
+
 
 class DisplayTime(QWidget):
 
     def __init__(self):
-        super().__init__() 
-        self.initializeUI() 
+        super().__init__()
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -28,13 +29,13 @@ class DisplayTime(QWidget):
         # Create timer object
         timer = QTimer(self)
         timer.timeout.connect(self.updateDateTime)
-        timer.start(1000) 
+        timer.start(1000)
 
         self.show()
 
     def setupWidgets(self):
         """
-        Set up labels that will display current date and time. 
+        Set up labels that will display current date and time.
         """
         current_date, current_time = self.getDateTime()
 
@@ -43,22 +44,22 @@ class DisplayTime(QWidget):
         self.time_label = QLabel(current_time)
         self.time_label.setStyleSheet("""color: white;
                                          border-color: white;
-                                         border-width: 2px; 
+                                         border-width: 2px;
                                          border-style: solid;
                                          border-radius: 4px;
-                                         padding: 10px; 
+                                         padding: 10px;
                                          font: bold 24px Courier""")
 
         # Create layout and add widgets
         v_box = QVBoxLayout()
-        v_box.addWidget(self.date_label, alignment=Qt.AlignCenter)
-        v_box.addWidget(self.time_label, alignment=Qt.AlignCenter)
+        v_box.addWidget(self.date_label, alignment = Qt.AlignCenter)
+        v_box.addWidget(self.time_label, alignment = Qt.AlignCenter)
 
         self.setLayout(v_box)
-    
+
     def getDateTime(self):
         """
-        Returns current date and time. 
+        Returns current date and time.
         """
         date = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
 
@@ -67,7 +68,7 @@ class DisplayTime(QWidget):
 
     def updateDateTime(self):
         """
-        Slot that updates date and time values. 
+        Slot that updates date and time values.
         """
         date = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
         time = QTime.currentTime().toString("hh:mm:ss AP")
@@ -75,6 +76,7 @@ class DisplayTime(QWidget):
         self.date_label.setText(date)
         self.time_label.setText(time)
         return date, time
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

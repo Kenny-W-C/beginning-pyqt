@@ -4,11 +4,14 @@ written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
-import sys, os
-from PyQt5.QtWidgets import (QApplication, QWidget, QListWidget,
-    QLabel, QGridLayout, QListWidgetItem)
+import os
+import sys
+
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QLabel, QListWidget,
+                             QListWidgetItem, QWidget)
+
 
 class DragAndDropGUI(QWidget):
     def __init__(self):
@@ -36,12 +39,12 @@ class DragAndDropGUI(QWidget):
         icon_widget.setDragEnabled(True)
         icon_widget.setViewMode(QListWidget.IconMode)
 
-        image_path = "images"   
+        image_path = "images"
         for img in os.listdir(image_path):
             list_item = QListWidgetItem()
             list_item.setText(img.split(".")[0])
-            list_item.setIcon(QIcon(os.path.join(image_path, 
-                                "{0}").format(img)))
+            list_item.setIcon(QIcon(os.path.join(image_path,
+                                                 "{0}").format(img)))
             icon_widget.setIconSize(QSize(50, 50))
             icon_widget.addItem(list_item)
 
@@ -59,6 +62,7 @@ class DragAndDropGUI(QWidget):
         grid.addWidget(list_widget, 1, 1)
 
         self.setLayout(grid)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

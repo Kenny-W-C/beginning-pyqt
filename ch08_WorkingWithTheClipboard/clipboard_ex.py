@@ -5,9 +5,11 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton,
-    QTextEdit, QDockWidget, QVBoxLayout, QFrame)
-from PyQt5.QtCore import Qt, QSize
+
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtWidgets import (QApplication, QDockWidget, QFrame, QMainWindow,
+                             QPushButton, QTextEdit, QVBoxLayout)
+
 
 class ClipboardEx(QMainWindow):
     def __init__(self):
@@ -31,8 +33,8 @@ class ClipboardEx(QMainWindow):
 
     def createClipboard(self):
         """
-        Set up clipboard and dock widget to display text from 
-        the clipboard. 
+        Set up clipboard and dock widget to display text from
+        the clipboard.
         """
         # Create dock widget
         clipboard_dock = QDockWidget()
@@ -69,14 +71,14 @@ class ClipboardEx(QMainWindow):
         if mime_data.hasText():
             self.cb_text.setText(mime_data.text())
             self.cb_text.repaint()
-    
+
     def pasteText(self):
         """
-        Paste text from clipboard if button is clicked. 
+        Paste text from clipboard if button is clicked.
         """
         self.central_widget.paste()
         self.central_widget.repaint()
-        
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -5,10 +5,12 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
+
+from PyQt5.QtCore import QPoint, QRect, Qt
+from PyQt5.QtGui import (QBrush, QColor, QFont, QLinearGradient, QPainter,
+                         QPainterPath, QPen, QPolygon)
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtGui import (QPainter, QPainterPath, QColor, 
-    QBrush, QPen, QFont, QPolygon, QLinearGradient)
-from PyQt5.QtCore import Qt, QPoint, QRect
+
 
 class Drawing(QWidget):
 
@@ -65,7 +67,7 @@ class Drawing(QWidget):
             pen.setWidth(i * 2)
             painter.setPen(pen)
             painter.drawPoint(i * 20, i * 20)
-        
+
     def drawDiffLines(self, painter):
         """
         Examples of how to draw lines with QPainter.
@@ -74,7 +76,7 @@ class Drawing(QWidget):
 
         painter.setPen(pen)
         painter.drawLine(230, 20, 230, 180)
-        
+
         pen.setStyle(Qt.DashLine)
         painter.setPen(pen)
         painter.drawLine(260, 20, 260, 180)
@@ -83,9 +85,9 @@ class Drawing(QWidget):
         painter.setPen(pen)
         painter.drawLine(290, 20, 290, 180)
 
-        pen.setStyle(Qt.DashDotLine) 
+        pen.setStyle(Qt.DashDotLine)
         painter.setPen(pen)
-        painter.drawLine(320, 20, 320, 180)    
+        painter.drawLine(320, 20, 320, 180)
 
         # Change the color and thickness of the pen
         blue_pen = QPen(QColor(self.blue), 4)
@@ -130,7 +132,7 @@ class Drawing(QWidget):
         painter.drawRect(20, 320, 80, 80)
 
         # Demonstrate how to change the alpha channel
-        # to include transparency 
+        # to include transparency
         blue_pen = QPen(QColor(32, 85, 230, 100), 5)
         blue_pen.setStyle(Qt.DashLine)
         painter.setPen(blue_pen)
@@ -145,7 +147,7 @@ class Drawing(QWidget):
         brush = QBrush(QColor(self.orange))
 
         points = QPolygon([QPoint(240, 240), QPoint(380, 250),
-                         QPoint(230, 380), QPoint(370, 360)])
+                           QPoint(230, 380), QPoint(370, 360)])
 
         painter.setPen(pen)
         painter.setBrush(brush)
@@ -189,7 +191,7 @@ class Drawing(QWidget):
         tail_path.lineTo(163, 540)
         tail_path.cubicTo(125, 360, 110, 440, 30, 420)
         tail_path.closeSubpath()
-        
+
         painter.setPen(pen)
         painter.setBrush(brush)
         painter.drawPath(tail_path)
@@ -200,7 +202,7 @@ class Drawing(QWidget):
         """
         height, width = self.height(), self.width()
 
-        center_x, center_y = (width / 2), height - 100 
+        center_x, center_y = (width / 2), height - 100
         radius_x, radius_y = 60, 60
 
         pen = QPen(Qt.black, 2, Qt.SolidLine)
@@ -224,6 +226,7 @@ class Drawing(QWidget):
         painter.setPen(pen)
         painter.setBrush(QBrush(gradient))
         painter.drawRect(420, 420, 160, 160)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

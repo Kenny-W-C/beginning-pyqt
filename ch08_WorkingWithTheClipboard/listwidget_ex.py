@@ -5,8 +5,11 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QListWidget,
-    QPushButton, QHBoxLayout, QVBoxLayout, QListWidgetItem, QInputDialog)
+
+from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QInputDialog,
+                             QListWidget, QListWidgetItem, QPushButton,
+                             QVBoxLayout, QWidget)
+
 
 class GroceryListGUI(QWidget):
     def __init__(self):
@@ -31,9 +34,9 @@ class GroceryListGUI(QWidget):
         self.list_widget = QListWidget()
         self.list_widget.setAlternatingRowColors(True)
 
-        # initilialize the Qlistwidget with items 
+        # initilialize the Qlistwidget with items
         grocery_list = ["grapes", "broccoli", "garlic", "cheese",
-                         "bacon", "eggs", "waffles", "rice", "soda"]
+                        "bacon", "eggs", "waffles", "rice", "soda"]
         for item in grocery_list:
             list_item = QListWidgetItem()
             list_item.setText(item)
@@ -78,12 +81,12 @@ class GroceryListGUI(QWidget):
     def insertItemInList(self):
         """
         Insert a single item into the list widget under the
-        current highlighted row. 
+        current highlighted row.
         """
         text, ok = QInputDialog.getText(self, "Insert Item", "Insert item:")
         if ok and text != "":
             row = self.list_widget.currentRow()
-            row = row + 1 # select row below current row
+            row = row + 1  # select row below current row
             new_item = QListWidgetItem()
             new_item.setText(text)
             self.list_widget.insertItem(row, new_item)
@@ -94,6 +97,7 @@ class GroceryListGUI(QWidget):
         """
         row = self.list_widget.currentRow()
         self.list_widget.takeItem(row)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

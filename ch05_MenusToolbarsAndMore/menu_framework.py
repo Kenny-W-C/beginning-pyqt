@@ -5,7 +5,9 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QAction)
+
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow)
+
 
 class BasicMenu(QMainWindow):
 
@@ -18,7 +20,7 @@ class BasicMenu(QMainWindow):
         """
         Initialize the window and display its contents to the screen
         """
-        self.setGeometry(100, 100, 350, 350) # x, y, width, height
+        self.setGeometry(100, 100, 350, 350)  # x, y, width, height
         self.setWindowTitle('Basic Menu Example')
 
         self.createMenu()
@@ -34,13 +36,14 @@ class BasicMenu(QMainWindow):
         exit_act.setShortcut('Ctrl+Q')
         exit_act.triggered.connect(self.close)
 
-        # Create menubar 
+        # Create menubar
         menu_bar = self.menuBar()
         menu_bar.setNativeMenuBar(False)
 
-        # Create file menu and add actions 
+        # Create file menu and add actions
         file_menu = menu_bar.addMenu('File')
         file_menu.addAction(exit_act)
+
 
 # Run program
 if __name__ == '__main__':

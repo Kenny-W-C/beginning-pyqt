@@ -5,16 +5,18 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QMessageBox, QPushButton,
-    QLabel, QLineEdit)
+
 from PyQt5.QtGui import QFont, QPixmap
+from PyQt5.QtWidgets import (QApplication, QLabel, QLineEdit, QMessageBox,
+                             QPushButton, QWidget)
+
 
 class CreateNewUser(QWidget):
 
     def __init__(self):
         super().__init__()
 
-        self.initializeUI() # call our function use to set up window
+        self.initializeUI()  # call our function use to set up window
 
     def initializeUI(self):
         """
@@ -30,7 +32,7 @@ class CreateNewUser(QWidget):
     def displayWidgetsToCollectInfo(self):
         """
         Create widgets that will be used to collect information
-        from the user to create a new account. 
+        from the user to create a new account.
         """
         # create label for image
         new_user_image = "images/new_user_icon.png"
@@ -97,17 +99,21 @@ class CreateNewUser(QWidget):
         if pswd_text != confirm_text:
             # display messagebox if passwords don't match
             QMessageBox.warning(self, "Error Message",
-                "The passwords you entered do not match. Please try again.", QMessageBox.Close,
-                QMessageBox.Close)
+                                "The passwords you entered do not match. "
+                                "Please try again.",
+                                QMessageBox.Close,
+                                QMessageBox.Close)
         else:
             # if passwords match, save passwords to file and return to login
             # and test if you can login with new user information.
             with open("files/users.txt", 'a+') as f:
                 f.write(self.name_entry.text() + " ")
                 f.write(pswd_text + "\n")
-            self.close() 
+            self.close()
 
-# Run program
+        # Run program
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = CreateNewUser()

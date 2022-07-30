@@ -4,12 +4,16 @@ written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
-import os, sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QListWidget, QListWidgetItem,
-    QLabel, QGroupBox, QPushButton, QVBoxLayout, QMdiArea, QMdiSubWindow,)
-from PyQt5.QtMultimedia import QCamera, QCameraInfo, QCameraImageCapture
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
+import os
+import sys
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtMultimedia import QCamera, QCameraImageCapture, QCameraInfo
+from PyQt5.QtMultimediaWidgets import QCameraViewfinder
+from PyQt5.QtWidgets import (QApplication, QGroupBox, QLabel, QListWidget,
+                             QListWidgetItem, QMainWindow, QMdiArea,
+                             QMdiSubWindow, QPushButton, QVBoxLayout)
+
 
 class Camera(QMainWindow):
 
@@ -32,7 +36,7 @@ class Camera(QMainWindow):
     def setupWindows(self):
         """
         Set up QMdiArea parent and subwindows.
-        Add available cameras on local system as items to 
+        Add available cameras on local system as items to
         list widget.
         """
         # Create images directory if it does not already exist
@@ -40,14 +44,14 @@ class Camera(QMainWindow):
         if not os.path.exists(path):
             os.makedirs(path)
 
-        # Set up list widget that will display identified 
+        # Set up list widget that will display identified
         # cameras on your computer.
         picture_label = QLabel("Press 'Spacebar' to take pictures.")
         camera_label = QLabel("Available Cameras")
         self.camera_list_widget = QListWidget()
         self.camera_list_widget.setAlternatingRowColors(True)
 
-        # Add availableCameras to a list to be displayed in 
+        # Add availableCameras to a list to be displayed in
         # list widget. Use QCameraInfo() to list available cameras.
         self.cameras = list(QCameraInfo().availableCameras())
         for camera in self.cameras:
@@ -64,7 +68,7 @@ class Camera(QMainWindow):
         controls_gbox.setTitle("Camera Controls")
 
         v_box = QVBoxLayout()
-        v_box.addWidget(picture_label, alignment=Qt.AlignCenter)
+        v_box.addWidget(picture_label, alignment = Qt.AlignCenter)
         v_box.addWidget(camera_label)
         v_box.addWidget(self.camera_list_widget)
         v_box.addWidget(choose_cam_button)
@@ -94,34 +98,34 @@ class Camera(QMainWindow):
         Create and setup camera functions.
         """
         for camera in self.cameras:
-            # Select camera by matching cam_name to one of the 
-            # devices in the cameras list. 
+            # Select camera by matching cam_name to one of the
+            # devices in the cameras list.
             if camera.deviceName() == cam_name:
-                self.cam = QCamera(camera) # Construct QCamera device
+                self.cam = QCamera(camera)  # Construct QCamera device
 
-                # Create camera viewfinder widget and add it to the 
+                # Create camera viewfinder widget and add it to the
                 # view_finder_window.
-                self.view_finder = QCameraViewfinder() 
+                self.view_finder = QCameraViewfinder()
                 self.view_finder_window.setWidget(self.view_finder)
                 self.view_finder.show()
 
-                # Sets the view finder to display video 
+                # Sets the view finder to display video
                 self.cam.setViewfinder(self.view_finder)
 
-                # QCameraImageCapture() is used for taking 
+                # QCameraImageCapture() is used for taking
                 # images or recordings.
                 self.image_capture = QCameraImageCapture(self.cam)
 
                 # Configure the camera to capture still images.
                 self.cam.setCaptureMode(QCamera.CaptureStillImage)
-                self.cam.start() # Slot to start the camera
+                self.cam.start()  # Slot to start the camera
             else:
                 pass
 
     def selectCamera(self):
         """
-        Slot for selecting one of the available cameras displayed 
-        in list widget. 
+        Slot for selecting one of the available cameras displayed
+        in list widget.
         """
         try:
             if self.list_item.isSelected():
@@ -144,7 +148,8 @@ class Camera(QMainWindow):
                 self.cam.unlock()
             except:
                 print("No camera in viewfinder.")
-    
+
+
 # Run program
 if __name__ == '__main__':
     app = QApplication(sys.argv)

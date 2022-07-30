@@ -5,14 +5,17 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessart modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QTextEdit,
-    QLineEdit, QPushButton, QCheckBox, QGridLayout, QVBoxLayout)
-from PyQt5.QtGui import QFont
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QApplication, QCheckBox, QGridLayout, QLabel,
+                             QLineEdit, QPushButton, QTextEdit, QVBoxLayout,
+                             QWidget)
+
 
 class ToDoList(QWidget):
-    
-    def __init__(self): # constructor
+
+    def __init__(self):  # constructor
         super().__init__()
 
         self.initializeUI()
@@ -49,12 +52,12 @@ class ToDoList(QWidget):
         appts_label.setFont(QFont('Arial', 20))
         appts_label.setAlignment(Qt.AlignCenter)
 
-        # create must do section 
+        # create must do section
         mustdo_grid = QGridLayout()
         mustdo_grid.setContentsMargins(5, 5, 5, 5)
 
         mustdo_grid.addWidget(mustdo_label, 0, 0, 1, 2)
-        
+
         # create checkboxes and line edit widgets
         for position in range(1, 15):
             checkbox = QCheckBox()
@@ -92,8 +95,9 @@ class ToDoList(QWidget):
         main_grid.addLayout(mustdo_grid, 1, 0)
         main_grid.addLayout(appt_v_box, 1, 1)
         main_grid.addWidget(clear_button, 2, 0, 1, 2)
-        
-        self.setLayout(main_grid)            
+
+        self.setLayout(main_grid)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

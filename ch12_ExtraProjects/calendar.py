@@ -5,14 +5,15 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel,
-    QCalendarWidget, QDateEdit, QGroupBox, QHBoxLayout, QGridLayout)
-from PyQt5.QtCore import Qt, QDate
-from PyQt5.QtGui import QFont
+
+from PyQt5.QtCore import QDate, Qt
+from PyQt5.QtWidgets import (QApplication, QCalendarWidget, QDateEdit,
+                             QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+                             QWidget)
 
 style_sheet = """
     QLabel{
-        padding: 5px; 
+        padding: 5px;
         font: 18px
     }
 
@@ -28,11 +29,12 @@ style_sheet = """
     }
 """
 
+
 class CalendarGUI(QWidget):
 
     def __init__(self):
-        super().__init__() 
-        self.initializeUI() 
+        super().__init__()
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -47,25 +49,27 @@ class CalendarGUI(QWidget):
 
     def createCalendar(self):
         """
-        Set up calendar, others widgets and layouts for main window. 
+        Set up calendar, others widgets and layouts for main window.
         """
         self.calendar = QCalendarWidget()
         self.calendar.setGridVisible(True)
         self.calendar.setMinimumDate(QDate(1900, 1, 1))
         self.calendar.setMaximumDate(QDate(2200, 1, 1))
 
-        # Connect to newDateSelection slot when currently selected date is changed
+        # Connect to newDateSelection slot when currently selected date is
+        # changed
         self.calendar.selectionChanged.connect(self.newDateSelection)
 
         current = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
         self.current_label = QLabel(current)
         self.current_label.setObjectName("DateSelected")
-    
-        # Create current, minimum and maximum QDateEdit widgets 
+
+        # Create current, minimum and maximum QDateEdit widgets
         min_date_label = QLabel("Minimum Date:")
         self.min_date_edit = QDateEdit()
         self.min_date_edit.setDisplayFormat("MMM d yyyy")
-        self.min_date_edit.setDateRange(self.calendar.minimumDate(), self.calendar.maximumDate())
+        self.min_date_edit.setDateRange(self.calendar.minimumDate(),
+                                        self.calendar.maximumDate())
         self.min_date_edit.setDate(self.calendar.minimumDate())
         self.min_date_edit.dateChanged.connect(self.minDatedChanged)
 
@@ -73,16 +77,18 @@ class CalendarGUI(QWidget):
         self.current_date_edit = QDateEdit()
         self.current_date_edit.setDisplayFormat("MMM d yyyy")
         self.current_date_edit.setDate(self.calendar.selectedDate())
-        self.current_date_edit.setDateRange(self.calendar.minimumDate(), self.calendar.maximumDate())
+        self.current_date_edit.setDateRange(self.calendar.minimumDate(),
+                                            self.calendar.maximumDate())
         self.current_date_edit.dateChanged.connect(self.selectionDateChanged)
 
         max_date_label = QLabel("Maximum Date:")
         self.max_date_edit = QDateEdit()
         self.max_date_edit.setDisplayFormat("MMM d yyyy")
-        self.max_date_edit.setDateRange(self.calendar.minimumDate(), self.calendar.maximumDate())
+        self.max_date_edit.setDateRange(self.calendar.minimumDate(),
+                                        self.calendar.maximumDate())
         self.max_date_edit.setDate(self.calendar.maximumDate())
         self.max_date_edit.dateChanged.connect(self.maxDatedChanged)
-                            
+
         # Add widgets to group box and add to grid layout
         dates_gb = QGroupBox("Set Dates")
         dates_grid = QGridLayout()
@@ -95,7 +101,7 @@ class CalendarGUI(QWidget):
         dates_grid.addWidget(self.max_date_edit, 3, 1)
         dates_gb.setLayout(dates_grid)
 
-        # Create and set main window's layout 
+        # Create and set main window's layout
         main_h_box = QHBoxLayout()
         main_h_box.addWidget(self.calendar)
         main_h_box.addWidget(dates_gb)
@@ -104,7 +110,8 @@ class CalendarGUI(QWidget):
 
     def selectionDateChanged(self, date):
         """
-        Update the current_date_edit when the calendar's selected date changes. 
+        Update the current_date_edit when the calendar's selected date
+        changes.
         """
         self.calendar.setSelectedDate(date)
 
@@ -119,7 +126,8 @@ class CalendarGUI(QWidget):
     def maxDatedChanged(self, date):
         """
         Update the calendar's maximum date.
-        Update min_date_edit to avoid conflicts with minimum and maximum dates. 
+        Update min_date_edit to avoid conflicts with minimum and maximum
+        dates.
         """
         self.calendar.setMaximumDate(date)
         self.min_date_edit.setDate(self.calendar.minimumDate())
@@ -132,6 +140,7 @@ class CalendarGUI(QWidget):
         date = self.calendar.selectedDate().toString(Qt.DefaultLocaleLongDate)
         self.current_date_edit.setDate(self.calendar.selectedDate())
         self.current_label.setText(date)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

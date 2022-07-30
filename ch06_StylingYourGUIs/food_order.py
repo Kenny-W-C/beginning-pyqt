@@ -5,11 +5,12 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QTabWidget, 
-    QLabel, QRadioButton, QButtonGroup, QGroupBox, QPushButton,
-    QVBoxLayout, QHBoxLayout, QGridLayout)
-from PyQt5.QtGui import QPixmap
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import (QApplication, QButtonGroup, QGridLayout,
+                             QGroupBox, QHBoxLayout, QLabel, QPushButton,
+                             QRadioButton, QTabWidget, QVBoxLayout, QWidget)
 
 # Set up style sheet for the entire GUI
 style_sheet = """
@@ -82,11 +83,12 @@ style_sheet = """
     }
 """
 
+
 class FoodOrderGUI(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -101,8 +103,8 @@ class FoodOrderGUI(QWidget):
 
     def setupTabsAndLayout(self):
         """
-        Set up tab bar and different tab widgets. 
-        Also, create the side widget to display items selected. 
+        Set up tab bar and different tab widgets.
+        Also, create the side widget to display items selected.
         """
         # Create tab bar, different tabs and set object names
         self.tab_bar = QTabWidget(self)
@@ -124,7 +126,7 @@ class FoodOrderGUI(QWidget):
         self.side_widget.setObjectName("Tabs")
         order_label = QLabel("YOUR ORDER")
         order_label.setObjectName("Header")
-        
+
         items_box = QWidget()
         items_box.setObjectName("Side")
         pizza_label = QLabel("Pizza Type: ")
@@ -143,7 +145,7 @@ class FoodOrderGUI(QWidget):
         items_grid.addWidget(extra_label, 2, 0, Qt.AlignRight)
         items_grid.addWidget(self.display_wings_label, 2, 1)
         items_box.setLayout(items_grid)
-    
+
         # Set main layout for side widget
         side_v_box = QVBoxLayout()
         side_v_box.addWidget(order_label)
@@ -160,10 +162,10 @@ class FoodOrderGUI(QWidget):
 
     def pizzaTab(self):
         """
-        Create the pizza tab. Allows the user to select the type 
+        Create the pizza tab. Allows the user to select the type
         of pizza and topping using radio buttons.
         """
-        # Set up widgets and layouts to display information 
+        # Set up widgets and layouts to display information
         # to the user about the page
         tab_pizza_label = QLabel("BUILD YOUR OWN PIZZA")
         tab_pizza_label.setObjectName("Header")
@@ -173,7 +175,10 @@ class FoodOrderGUI(QWidget):
         pizza_image = self.loadImage(pizza_image_path)
         pizza_desc = QLabel()
         pizza_desc.setObjectName("ImageInfo")
-        pizza_desc.setText("Build a custom pizza for you. Start with your favorite crust and add any toppings, plus the perfect amount of cheese and sauce.")
+        pizza_desc.setText(
+            "Build a custom pizza for you. Start with your favorite crust "
+            "and add any toppings, plus the perfect amount of cheese and "
+            "sauce.")
         pizza_desc.setWordWrap(True)
 
         h_box = QHBoxLayout()
@@ -186,19 +191,19 @@ class FoodOrderGUI(QWidget):
         crust_gbox = QGroupBox()
         crust_gbox.setTitle("CHOOSE YOUR CRUST")
 
-        # The group box is used to group the widgets together, 
-        # while the button group is used to get information about 
+        # The group box is used to group the widgets together,
+        # while the button group is used to get information about
         # which radio button is checked
         self.crust_group = QButtonGroup()
         gb_v_box = QVBoxLayout()
         crust_list = ["Hand-Tossed", "Flat", "Stuffed"]
-        # Create radio buttons for the different crusts and 
+        # Create radio buttons for the different crusts and
         # add to layout
         for cr in crust_list:
             crust_rb = QRadioButton(cr)
             gb_v_box.addWidget(crust_rb)
             self.crust_group.addButton(crust_rb)
-          
+
         crust_gbox.setLayout(gb_v_box)
 
         # Create group box that will contain toppings choices
@@ -210,16 +215,17 @@ class FoodOrderGUI(QWidget):
         gb_v_box = QVBoxLayout()
 
         toppings_list = ["Pepperoni", "Sausage", "Bacon", "Canadian Bacon",
-                        "Beef", "Pineapple", "Mushroom", "Onion",  
-                        "Olive", "Green Pepper", "Tomato", "Spinach", "Cheese"]
-        # Create radio buttons for the different toppings and 
+                         "Beef", "Pineapple", "Mushroom", "Onion",
+                         "Olive", "Green Pepper", "Tomato", "Spinach",
+                         "Cheese"]
+        # Create radio buttons for the different toppings and
         # add to layout
         for top in toppings_list:
             toppings_rb = QRadioButton(top)
             gb_v_box.addWidget(toppings_rb)
             self.toppings_group.addButton(toppings_rb)
         self.toppings_group.setExclusive(False)
-          
+
         toppings_gbox.setLayout(gb_v_box)
 
         # Create button to add information to side widget
@@ -234,12 +240,12 @@ class FoodOrderGUI(QWidget):
         page1_v_box.addWidget(crust_gbox)
         page1_v_box.addWidget(toppings_gbox)
         page1_v_box.addStretch()
-        page1_v_box.addWidget(add_to_order_button1, alignment=Qt.AlignRight)
+        page1_v_box.addWidget(add_to_order_button1, alignment = Qt.AlignRight)
 
         self.pizza_tab.setLayout(page1_v_box)
 
     def wingsTab(self):
-        # Set up widgets and layouts to display information 
+        # Set up widgets and layouts to display information
         # to the user about the page
         tab_wings_label = QLabel("TRY OUR AMAZING WINGS")
         tab_wings_label.setObjectName("Header")
@@ -249,7 +255,9 @@ class FoodOrderGUI(QWidget):
         wings_image = self.loadImage(wings_image_path)
         wings_desc = QLabel()
         wings_desc.setObjectName("ImageInfo")
-        wings_desc.setText("6 pieces of rich-tasting, white meat chicken that will have you coming back for more.")
+        wings_desc.setText(
+            "6 pieces of rich-tasting, white meat chicken that will have you "
+            "coming back for more.")
         wings_desc.setWordWrap(True)
 
         h_box = QHBoxLayout()
@@ -265,40 +273,42 @@ class FoodOrderGUI(QWidget):
         gb_v_box = QVBoxLayout()
         wings_list = ["Buffalo", "Sweet-Sour", "Teriyaki", "Barbecue"]
 
-        # Create radio buttons for the different flavors and 
+        # Create radio buttons for the different flavors and
         # add to layout
         for fl in wings_list:
             flavor_rb = QRadioButton(fl)
             gb_v_box.addWidget(flavor_rb)
             self.wings_group.addButton(flavor_rb)
-          
+
         wings_gbox.setLayout(gb_v_box)
 
         # Create button to add information to side widget
         # when clicked
         add_to_order_button2 = QPushButton("Add To Order")
         add_to_order_button2.clicked.connect(self.displayWingsInOrder)
-        
+
         # create layout for wings tab (page 2)
         page2_v_box = QVBoxLayout()
         page2_v_box.addWidget(tab_wings_label)
         page2_v_box.addWidget(description_box)
         page2_v_box.addWidget(wings_gbox)
-        page2_v_box.addWidget(add_to_order_button2, alignment=Qt.AlignRight)
+        page2_v_box.addWidget(add_to_order_button2, alignment = Qt.AlignRight)
         page2_v_box.addStretch()
 
         self.wings_tab.setLayout(page2_v_box)
 
     def loadImage(self, img_path):
         """
-        Load and scale images. 
+        Load and scale images.
         """
         try:
             with open(img_path):
                 image = QLabel(self)
                 image.setObjectName("ImageInfo")
                 pixmap = QPixmap(img_path)
-                image.setPixmap(pixmap.scaled(image.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation))
+                image.setPixmap(
+                    pixmap.scaled(image.size(), Qt.KeepAspectRatioByExpanding,
+                                  Qt.SmoothTransformation))
                 return image
         except FileNotFoundError:
             print("Image not found.")
@@ -307,7 +317,9 @@ class FoodOrderGUI(QWidget):
         """
         Create list of all checked toppings radio buttons.
         """
-        toppings_list = [button.text() for i, button in enumerate(self.toppings_group.buttons()) if button.isChecked()]
+        toppings_list = [button.text() for i, button in
+                         enumerate(self.toppings_group.buttons()) if
+                         button.isChecked()]
         return toppings_list
 
     def displayPizzaInOrder(self):
@@ -322,7 +334,7 @@ class FoodOrderGUI(QWidget):
             toppings = self.collectToppingsInList()
             toppings_str = '\n'.join(toppings)
             self.display_toppings_label.setText(toppings_str)
-        
+
             self.repaint()
         except AttributeError:
             print("No value selected.")
@@ -335,11 +347,12 @@ class FoodOrderGUI(QWidget):
         """
         try:
             text = self.wings_group.checkedButton().text() + " Wings"
-            self.display_wings_label.setText(text) 
+            self.display_wings_label.setText(text)
             self.repaint()
         except AttributeError:
             print("No value selected.")
             pass
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -4,9 +4,11 @@ written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
-import sys, os.path
-from PyQt5.QtWidgets import QApplication, QLabel, QWidget
+import sys
+
 from PyQt5.QtGui import QFont, QPixmap
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget
+
 
 class UserProfile(QWidget):
 
@@ -17,7 +19,7 @@ class UserProfile(QWidget):
 
     def initializeUI(self):
         """
-        Initialize the window and display its contents to the screen. 
+        Initialize the window and display its contents to the screen.
         """
         self.setGeometry(50, 50, 250, 400)
         self.setWindowTitle("2.1 - User Profile GUI")
@@ -28,9 +30,9 @@ class UserProfile(QWidget):
 
     def displayImages(self):
         """
-        Display background and profile images. 
+        Display background and profile images.
 
-        Check to see if image files exist, if not throw an exception. 
+        Check to see if image files exist, if not throw an exception.
         """
         background_image = "images/skyblue.png"
         profile_image = "images/profile_image.png"
@@ -103,6 +105,7 @@ class UserProfile(QWidget):
         dates.setText("Aug 2015 - Dec 2017")
         dates.move(15, 370)
         dates.setFont(QFont('Arial', 10))
+
 
 # Run program
 if __name__ == '__main__':

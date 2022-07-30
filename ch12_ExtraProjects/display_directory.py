@@ -5,14 +5,17 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QFileSystemModel,
-    QTreeView, QFrame, QAction, QFileDialog, QVBoxLayout)
+
+from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog,
+                             QFileSystemModel, QFrame, QMainWindow, QTreeView,
+                             QVBoxLayout)
+
 
 class DisplayDirectory(QMainWindow):
 
     def __init__(self):
-        super().__init__() 
-        self.initializeUI() 
+        super().__init__()
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -38,17 +41,17 @@ class DisplayDirectory(QMainWindow):
 
         # Create menubar
         menu_bar = self.menuBar()
-        #menu_bar.setNativeMenuBar(False) # uncomment for macOS
+        # menu_bar.setNativeMenuBar(False) # uncomment for macOS
 
-        # Create file menu and add actions 
+        # Create file menu and add actions
         dir_menu = menu_bar.addMenu('Directories')
         dir_menu.addAction(open_dir_act)
         dir_menu.addAction(root_act)
 
     def setupTree(self):
         """
-        Set up the QTreeView so that it displays the contents 
-        of the local filesystem. 
+        Set up the QTreeView so that it displays the contents
+        of the local filesystem.
         """
         self.model = QFileSystemModel()
         self.model.setRootPath('')
@@ -57,7 +60,7 @@ class DisplayDirectory(QMainWindow):
         self.tree.setIndentation(10)
         self.tree.setModel(self.model)
 
-        # Set up container and layout 
+        # Set up container and layout
         frame = QFrame()
         frame_v_box = QVBoxLayout()
         frame_v_box.addWidget(self.tree)
@@ -71,16 +74,18 @@ class DisplayDirectory(QMainWindow):
         """
         file_dialog = QFileDialog(self)
         file_dialog.setFileMode(QFileDialog.Directory)
-        directory = file_dialog.getExistingDirectory(self, "Open Directory", 
-                "", QFileDialog.ShowDirsOnly)
+        directory = file_dialog.getExistingDirectory(self, "Open Directory",
+                                                     "",
+                                                     QFileDialog.ShowDirsOnly)
 
         self.tree.setRootIndex(self.model.index(directory))
 
     def returnToRootDirectory(self):
         """
-        Re-display the contents of the root directory. 
+        Re-display the contents of the root directory.
         """
         self.tree.setRootIndex(self.model.index(''))
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

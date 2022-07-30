@@ -5,18 +5,19 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel,
-    QHBoxLayout)
-from PyQt5.QtGui import QPixmap, QImage
+
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QLabel, QWidget)
+
 from rgb_slider import RGBSlider, style_sheet
 
 
 class loadImage(QWidget):
 
     def __init__(self):
-        super().__init__() 
-        self.initializeUI() 
+        super().__init__()
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -44,6 +45,7 @@ class loadImage(QWidget):
         self.setLayout(h_box)
 
         self.show()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

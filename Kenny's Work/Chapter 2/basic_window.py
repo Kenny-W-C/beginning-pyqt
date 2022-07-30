@@ -1,9 +1,3 @@
-"""
-Listing 2-1
-written by Joshua Willman
-Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
-"""
-# import necessary modules
 import sys
 
 from PyQt5.QtWidgets import QApplication, QWidget

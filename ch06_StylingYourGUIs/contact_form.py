@@ -5,14 +5,17 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QTabWidget, QLabel, 
-    QRadioButton, QGroupBox, QLineEdit, QHBoxLayout, QVBoxLayout)
+
+from PyQt5.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
+                             QLineEdit, QRadioButton, QTabWidget, QVBoxLayout,
+                             QWidget)
+
 
 class ContactForm(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -28,7 +31,7 @@ class ContactForm(QWidget):
     def setupTabs(self):
         """
         Set up tab bar and different tab widgets. Each tab is a QWidget that
-        serves as a container for each page. 
+        serves as a container for each page.
         """
         # Create tab bar and different tabs
         self.tab_bar = QTabWidget(self)
@@ -52,19 +55,19 @@ class ContactForm(QWidget):
 
     def profileDetailsTab(self):
         """
-        Create the profile tab. Allows the user enter their name, 
+        Create the profile tab. Allows the user enter their name,
         address and select their gender.
         """
-        # Set up labels and line edit widgets 
+        # Set up labels and line edit widgets
         name_label = QLabel("Name")
         name_entry = QLineEdit()
 
         address_label = QLabel("Address")
         address_entry = QLineEdit()
 
-        # Create group box to contain radio buttons 
+        # Create group box to contain radio buttons
         sex_gb = QGroupBox("Sex")
- 
+
         male_rb = QRadioButton("Male")
         female_rb = QRadioButton("Female")
 
@@ -85,12 +88,12 @@ class ContactForm(QWidget):
         tab_v_box.addStretch()
         tab_v_box.addWidget(sex_gb)
 
-        # Set layout for profile details tab 
+        # Set layout for profile details tab
         self.prof_details_tab.setLayout(tab_v_box)
 
     def backgroundTab(self):
         """
-        Create the background tab. The user can select a 
+        Create the background tab. The user can select a
         """
         # Set up group box to hold radio buttons
         self.education_gb = QGroupBox("Highest Level of Education")
@@ -100,7 +103,8 @@ class ContactForm(QWidget):
 
         # Create and add radio buttons to ed_v_box
         education_list = ["High School Diploma", "Associate's Degree",
-            "Bachelor's Degree", "Master's Degree", "Doctorate or Higher"]
+                          "Bachelor's Degree", "Master's Degree",
+                          "Doctorate or Higher"]
         for ed in education_list:
             self.education_rb = QRadioButton(ed)
             ed_v_box.addWidget(self.education_rb)
@@ -112,6 +116,7 @@ class ContactForm(QWidget):
         tab_v_box.addWidget(self.education_gb)
 
         self.background_tab.setLayout(tab_v_box)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

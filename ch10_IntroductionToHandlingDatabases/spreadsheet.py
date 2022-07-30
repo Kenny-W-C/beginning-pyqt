@@ -5,12 +5,13 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow,
-    QTableWidget, QTableWidgetItem, QMenu, QAction,
-    QInputDialog)
+
+from PyQt5.QtWidgets import (QAction, QApplication, QInputDialog, QMainWindow,
+                             QMenu, QTableWidget, QTableWidgetItem)
+
 
 class SpreadsheetFramework(QMainWindow):
-    
+
     def __init__(self):
         super().__init__()
 
@@ -38,11 +39,12 @@ class SpreadsheetFramework(QMainWindow):
         self.table_widget.setRowCount(10)
         self.table_widget.setColumnCount(10)
 
-        # Set focus on cell in the table 
+        # Set focus on cell in the table
         self.table_widget.setCurrentCell(0, 0)
 
         # When the horizontal headers are double-clicked, emit a signal
-        self.table_widget.horizontalHeader().sectionDoubleClicked.connect(self.changeHeader)
+        self.table_widget.horizontalHeader().sectionDoubleClicked.connect(
+            self.changeHeader)
 
         self.setCentralWidget(self.table_widget)
 
@@ -55,16 +57,16 @@ class SpreadsheetFramework(QMainWindow):
         quit_act.setShortcut('Ctrl+Q')
         quit_act.triggered.connect(self.close)
 
-        # Create table menu actions 
+        # Create table menu actions
         self.add_row_above_act = QAction("Add Row Above", self)
         self.add_row_above_act.triggered.connect(self.addRowAbove)
-        
+
         self.add_row_below_act = QAction("Add Row Below", self)
         self.add_row_below_act.triggered.connect(self.addRowBelow)
 
         self.add_col_before_act = QAction("Add Column Before", self)
         self.add_col_before_act.triggered.connect(self.addColumnBefore)
-        
+
         self.add_col_after_act = QAction("Add Column After", self)
         self.add_col_after_act.triggered.connect(self.addColumnAfter)
 
@@ -103,7 +105,7 @@ class SpreadsheetFramework(QMainWindow):
         Create context menu and actions.
         """
         context_menu = QMenu(self)
-        
+
         context_menu.addAction(self.add_row_above_act)
         context_menu.addAction(self.add_row_below_act)
         context_menu.addSeparator()
@@ -118,31 +120,33 @@ class SpreadsheetFramework(QMainWindow):
         context_menu.addSeparator()
         context_menu.addAction(self.clear_table_act)
 
-        # Execute the context_menu and return the action selected. 
-        # mapToGlobal() translates the position of the window coordinates 
-        # to the global screen cooridnates. This way we can detect if 
-        # a right-click occurred inside of the GUI and display the context menu.
+        # Execute the context_menu and return the action selected.
+        # mapToGlobal() translates the position of the window coordinates
+        # to the global screen cooridnates. This way we can detect if
+        # a right-click occurred inside of the GUI and display the context
+        # menu.
         action = context_menu.exec_(self.mapToGlobal(event.pos()))
 
         # To check for actions selected in the context menu that were not
-        # created in the menu bar. 
+        # created in the menu bar.
         if action == copy_act:
             self.copyItem()
         if action == paste_act:
             self.pasteItem()
-    
+
     def changeHeader(self):
-        """ 
+        """
         Change horizontal headers by returning the text from input dialog.
         """
         col = self.table_widget.currentColumn()
 
         text, ok = QInputDialog.getText(self, "Enter Header", "Header text:")
-        
+
         if ok and text != "":
-            self.table_widget.setHorizontalHeaderItem(col, QTableWidgetItem(text))
+            self.table_widget.setHorizontalHeaderItem(col,
+                                                      QTableWidgetItem(text))
         else:
-            pass    
+            pass
 
     def copyItem(self):
         """
@@ -158,7 +162,8 @@ class SpreadsheetFramework(QMainWindow):
         if self.item_text != None:
             row = self.table_widget.currentRow()
             column = self.table_widget.currentColumn()
-            self.table_widget.setItem(row, column, QTableWidgetItem(self.item_text))
+            self.table_widget.setItem(row, column,
+                                      QTableWidgetItem(self.item_text))
 
     def addRowAbove(self):
         current_row = self.table_widget.currentRow()
@@ -186,6 +191,7 @@ class SpreadsheetFramework(QMainWindow):
 
     def clearTable(self):
         self.table_widget.clear()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

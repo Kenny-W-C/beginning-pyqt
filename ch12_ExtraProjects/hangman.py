@@ -4,12 +4,14 @@ written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
-import sys, random
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QPushButton,
-    QLabel, QFrame, QButtonGroup, QHBoxLayout, QVBoxLayout, 
-    QMessageBox, QSizePolicy)
-from PyQt5.QtCore import Qt, QRect, QLine
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
+import random
+import sys
+
+from PyQt5.QtCore import QLine, QRect, Qt
+from PyQt5.QtGui import QBrush, QColor, QPainter, QPen
+from PyQt5.QtWidgets import (QApplication, QButtonGroup, QFrame, QHBoxLayout,
+                             QLabel, QMainWindow, QMessageBox, QPushButton,
+                             QSizePolicy, QVBoxLayout, QWidget)
 
 style_sheet = """
     QWidget{
@@ -24,7 +26,7 @@ style_sheet = """
     QPushButton#Letters{
         background-color: #1FAEDE;
         color: #D2DDE1;
-        border-style: solid; 
+        border-style: solid;
         border-radius: 3px;
         border-color: #38454A;
         font: 28px
@@ -42,8 +44,9 @@ style_sheet = """
     }
 """
 
-# The hangman is drawn on a QLabel object, rather than 
-# on the main window. This class handles the drawing. 
+
+# The hangman is drawn on a QLabel object, rather than
+# on the main window. This class handles the drawing.
 class DrawingLabel(QLabel):
 
     def __init__(self, parent):
@@ -58,7 +61,7 @@ class DrawingLabel(QLabel):
         self.empty_list = []
 
     def drawHangmanBackground(self, painter):
-        """ 
+        """
         Draw the gallows.
         """
         painter.setBrush(QBrush(QColor("#000000")))
@@ -82,24 +85,24 @@ class DrawingLabel(QLabel):
             painter.setBrush(QBrush(QColor("#000000")))
             painter.drawRect(body)
         if "right_arm" in self.empty_list:
-            right_arm = QLine((self.width / 2) + 60, 85, 
-                (self.width / 2) + 50, (self.height / 2) + 30)
+            right_arm = QLine((self.width / 2) + 60, 85,
+                              (self.width / 2) + 50, (self.height / 2) + 30)
             pen = QPen(Qt.black, 3, Qt.SolidLine)
             painter.setPen(pen)
             painter.drawLine(right_arm)
         if "left_arm" in self.empty_list:
-            left_arm = QLine((self.width / 2) + 62, 85, 
-                (self.width / 2) + 72, (self.height / 2) + 30)
+            left_arm = QLine((self.width / 2) + 62, 85,
+                             (self.width / 2) + 72, (self.height / 2) + 30)
             painter.drawLine(left_arm)
         if "right_leg" in self.empty_list:
-            right_leg = QLine((self.width / 2) + 60, 135, 
-                (self.width / 2) + 50, (self.height / 2) + 75)
+            right_leg = QLine((self.width / 2) + 60, 135,
+                              (self.width / 2) + 50, (self.height / 2) + 75)
             painter.drawLine(right_leg)
         if "left_leg" in self.empty_list:
-            left_leg = QLine((self.width / 2) + 62, 135, 
-                (self.width / 2) + 72, (self.height / 2) + 75)      
+            left_leg = QLine((self.width / 2) + 62, 135,
+                             (self.width / 2) + 72, (self.height / 2) + 75)
             painter.drawLine(left_leg)
-        
+
         # Reset variable
         self.incorrect_letter = False
 
@@ -117,12 +120,13 @@ class DrawingLabel(QLabel):
 
         painter.end()
 
+
 class Hangman(QMainWindow):
 
     def __init__(self):
-        super().__init__() 
+        super().__init__()
 
-        self.initializeUI() 
+        self.initializeUI()
 
     def initializeUI(self):
         """
@@ -133,7 +137,7 @@ class Hangman(QMainWindow):
 
         self.newGame()
 
-        self.show()  
+        self.show()
 
     def newGame(self):
         """
@@ -146,9 +150,10 @@ class Hangman(QMainWindow):
     def setupHangmanBoard(self):
         """
         Set up label object to display hangman.
-        """ 
+        """
         self.hangman_label = DrawingLabel(self)
-        self.hangman_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.hangman_label.setSizePolicy(QSizePolicy.Expanding,
+                                         QSizePolicy.Expanding)
 
     def setupWord(self):
         """
@@ -158,7 +163,7 @@ class Hangman(QMainWindow):
         """
         words = self.openFile()
         self.chosen_word = random.choice(words).upper()
-        #print(self.chosen_word)
+        # print(self.chosen_word)
 
         # Keep track of correct guesses
         self.correct_counter = 0
@@ -174,7 +179,7 @@ class Hangman(QMainWindow):
             self.labels.append(self.letter_label)
             self.letter_label.setObjectName("Word")
             word_h_box.addWidget(self.letter_label)
-            
+
         self.word_frame = QFrame()
         self.word_frame.setLayout(word_h_box)
 
@@ -188,7 +193,7 @@ class Hangman(QMainWindow):
 
         # Create buttongroup to keep track of letters
         self.keyboard_bg = QButtonGroup()
-        
+
         # Set up keys in the top row
         top_row_h_box = QHBoxLayout()
 
@@ -227,7 +232,7 @@ class Hangman(QMainWindow):
 
         # Connect buttons in button group to slot
         self.keyboard_bg.buttonClicked.connect(self.buttonPushed)
-        
+
         keyboard_v_box = QVBoxLayout()
         keyboard_v_box.addWidget(top_frame)
         keyboard_v_box.addWidget(mid_frame)
@@ -235,7 +240,7 @@ class Hangman(QMainWindow):
 
         keyboard_frame = QFrame()
         keyboard_frame.setLayout(keyboard_v_box)
-        
+
         # Create main layout and add widgets
         main_v_box = QVBoxLayout()
         main_v_box.addWidget(self.hangman_label)
@@ -254,19 +259,21 @@ class Hangman(QMainWindow):
         """
         button.setEnabled(False)
 
-        body_parts_list = ["head", "body", "right_arm", 
-            "left_arm", "right_leg", "left_leg"]
+        body_parts_list = ["head", "body", "right_arm",
+                           "left_arm", "right_leg", "left_leg"]
 
         # When the user guesses incorrectly and the number of incorrect
         # turns is not equal to 6 (the number of body parts).
-        if button.text() not in self.chosen_word and self.hangman_label.incorrect_turns <= 5:
+        if button.text() not in self.chosen_word and \
+                self.hangman_label.incorrect_turns <= 5:
             self.hangman_label.incorrect_turns += 1
             index = self.hangman_label.incorrect_turns - 1
             self.hangman_label.empty_list.append(body_parts_list[index])
-            self.hangman_label.incorrect_letter = True  
-        # When a correct letter is chosen, update labels and 
+            self.hangman_label.incorrect_letter = True
+            # When a correct letter is chosen, update labels and
         # correct counter.
-        elif button.text() in self.chosen_word and self.hangman_label.incorrect_turns <= 5:
+        elif button.text() in self.chosen_word and \
+                self.hangman_label.incorrect_turns <= 5:
             self.hangman_label.incorrect_letter = True
             for i in range(len(self.chosen_word)):
                 if self.chosen_word[i] == button.text():
@@ -280,7 +287,7 @@ class Hangman(QMainWindow):
         # the length of the word.
         if self.correct_counter == len(self.chosen_word):
             self.displayDialogs("win")
-        
+
         # Game over if number of incorrect turns equals
         # the number of body parts. Reveal word to user.
         if self.hangman_label.incorrect_turns == 6:
@@ -288,7 +295,7 @@ class Hangman(QMainWindow):
                 self.labels[i].setText(self.chosen_word[i])
             self.displayDialogs("game_over")
 
-        #self.update()
+        # self.update()
 
     def openFile(self):
         """
@@ -308,16 +315,21 @@ class Hangman(QMainWindow):
         Display win and game over dialog boxes.
         """
         if text == "win":
-            message = QMessageBox().question(self, "Win!", 
-                "You Win!\nNEW GAME?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            message = QMessageBox().question(self, "Win!",
+                                             "You Win!\nNEW GAME?",
+                                             QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.No)
         elif text == "game_over":
-            message = QMessageBox().question(self, "Game Over", 
-                "Game Over\nNEW GAME?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            message = QMessageBox().question(self, "Game Over",
+                                             "Game Over\nNEW GAME?",
+                                             QMessageBox.Yes | QMessageBox.No,
+                                             QMessageBox.No)
 
         if message == QMessageBox.No:
             self.close()
         else:
             self.newGame()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

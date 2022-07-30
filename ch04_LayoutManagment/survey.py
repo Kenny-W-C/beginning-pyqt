@@ -5,9 +5,12 @@ Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
 # import necessary modules
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, 
-    QCheckBox, QButtonGroup, QHBoxLayout, QVBoxLayout)
+
 from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import (QApplication, QButtonGroup, QCheckBox,
+                             QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
+                             QWidget)
+
 
 class DisplaySurvey(QWidget):
     def __init__(self):
@@ -27,7 +30,7 @@ class DisplaySurvey(QWidget):
 
     def displayWidgets(self):
         """
-        Set up widgets horizontally using QHBoxLayout. 
+        Set up widgets horizontally using QHBoxLayout.
         """
         # create label and button widgets
         title = QLabel("Restaurant Name")
@@ -45,7 +48,8 @@ class DisplaySurvey(QWidget):
         # create checkboxes and them to horizontal layout, and stretchable
         # space on both sides of the widgets
         ratings_h_box = QHBoxLayout()
-        ratings_h_box.setSpacing(60) # set spacing between in widgets in horizontal layout
+        ratings_h_box.setSpacing(
+            60)  # set spacing between in widgets in horizontal layout
 
         ratings_h_box.addStretch()
         for rating in ratings:
@@ -54,7 +58,8 @@ class DisplaySurvey(QWidget):
         ratings_h_box.addStretch()
 
         cb_h_box = QHBoxLayout()
-        cb_h_box.setSpacing(100) # set spacing between in widgets in horizontal layout
+        cb_h_box.setSpacing(
+            100)  # set spacing between in widgets in horizontal layout
         # Create button group to contain checkboxes
         scale_bg = QButtonGroup(self)
 
@@ -89,6 +94,7 @@ class DisplaySurvey(QWidget):
         Print the text of checkbox selected.
         """
         print("{} Selected.".format(cb.text()))
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

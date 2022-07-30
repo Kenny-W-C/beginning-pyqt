@@ -3,10 +3,14 @@ Listing 11-1
 written by Joshua Willman
 Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
 """
-import os, sys, time
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QProgressBar,
-    QLineEdit, QPushButton, QTextEdit, QComboBox, QFileDialog, QGridLayout)
-from PyQt5.QtCore import pyqtSignal, QThread
+import os
+import sys
+import time
+
+from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtWidgets import (QApplication, QComboBox, QFileDialog, QGridLayout,
+                             QLabel, QLineEdit, QProgressBar, QPushButton,
+                             QTextEdit, QWidget)
 
 style_sheet = """
     QProgressBar{
@@ -25,7 +29,9 @@ style_sheet = """
     }
 """
 
-# Create worker thread for running tasks like updating the progress bar, renaming photos,
+
+# Create worker thread for running tasks like updating the progress bar,
+# renaming photos,
 # displaying information in the text edit widget.
 class Worker(QThread):
     updateValueSignal = pyqtSignal(int)
@@ -48,7 +54,8 @@ class Worker(QThread):
 
     def run(self):
         """
-        The thread begins running from here. run() is only called after start().
+        The thread begins running from here. run() is only called after
+        start().
         """
         for (i, file) in enumerate(os.listdir(self.dir)):
             _, file_ext = os.path.splitext(file)
@@ -56,21 +63,24 @@ class Worker(QThread):
                 new_file_name = self.prefix + str(i) + self.ext
                 src_path = os.path.join(self.dir, file)
                 dst_path = os.path.join(self.dir, new_file_name)
-                
-                
-                # os.rename(src, dst): src is original address of file to be renamed 
+
+                # os.rename(src, dst): src is original address of file to be
+                # renamed
                 # and dst is destination location with new name.
                 os.rename(src_path, dst_path)
-                time.sleep(4.0) # Uncomment if process is too fast and want to see the updates.
+                time.sleep(
+                    4.0)  # Uncomment if process is too fast and want to see
+                # the updates.
 
                 self.updateValueSignal.emit(i + 1)
                 self.updateTextEditSignal.emit(file, new_file_name)
             else:
                 pass
-        self.updateValueSignal.emit(0) # reset the value of the progressbar
+        self.updateValueSignal.emit(0)  # reset the value of the progressbar
+
 
 class RenameFilesGUI(QWidget):
-    
+
     def __init__(self):
         super().__init__()
         self.initializeUI()
@@ -100,10 +110,12 @@ class RenameFilesGUI(QWidget):
         dir_button.clicked.connect(self.setDirectory)
 
         self.change_name_edit = QLineEdit()
-        self.change_name_edit.setToolTip("Files will be appended with numerical values. For example: filename<b>01</b>.jpg")
+        self.change_name_edit.setToolTip(
+            "Files will be appended with numerical values. For example: "
+            "filename<b>01</b>.jpg")
         self.change_name_edit.setPlaceholderText("Change file names to...")
 
-        rename_button= QPushButton("Rename Files")
+        rename_button = QPushButton("Rename Files")
         rename_button.setToolTip("Begin renaming files in directory.")
         rename_button.clicked.connect(self.renameFiles)
 
@@ -146,18 +158,22 @@ class RenameFilesGUI(QWidget):
         """
         file_dialog = QFileDialog(self)
         file_dialog.setFileMode(QFileDialog.Directory)
-        self.directory = file_dialog.getExistingDirectory(self, "Open Directory", "", QFileDialog.ShowDirsOnly)
+        self.directory = file_dialog.getExistingDirectory(self,
+                                                          "Open Directory", "",
+                                                          QFileDialog.ShowDirsOnly)
 
         if self.directory:
             self.dir_line_edit.setText(self.directory)
 
-            # Set the max value of progress bar equal to max number of files in the directory.
+            # Set the max value of progress bar equal to max number of files
+            # in the directory.
             num_of_files = len([name for name in os.listdir(self.directory)])
             self.progress_bar.setRange(0, num_of_files)
 
     def updateCbValue(self, text):
         """
-        Change the combobox value. Values represent the different file extensions.
+        Change the combobox value. Values represent the different file
+        extensions.
         """
         self.cb_value = text
         print(self.cb_value)
@@ -174,7 +190,7 @@ class RenameFilesGUI(QWidget):
             self.stop_button.setEnabled(True)
             self.stop_button.repaint()
             self.stop_button.clicked.connect(self.worker.stopRunning)
-            
+
             self.worker.updateValueSignal.connect(self.updateProgressBar)
             self.worker.updateTextEditSignal.connect(self.updateTextEdit)
             self.worker.finished.connect(self.worker.deleteLater)
@@ -186,7 +202,9 @@ class RenameFilesGUI(QWidget):
         self.progress_bar.setValue(value)
 
     def updateTextEdit(self, old_text, new_text):
-        self.display_files_edit.append("[INFO] {} changed to {}.".format(old_text, new_text))
+        self.display_files_edit.append(
+            "[INFO] {} changed to {}.".format(old_text, new_text))
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

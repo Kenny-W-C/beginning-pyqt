@@ -1,42 +1,25 @@
-"""
-Listing 2-2
-written by Joshua Willman
-Featured in "Beginning Pyqt - A Hands-on Approach to GUI Programming"
-"""
-# import necessary modules
 import sys
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 
 
-class EmptyWindow(QWidget):
-
+class HelloWorldWindow(QWidget):
     def __init__(self):
         super().__init__()
-
         self.initializeUI()
 
     def initializeUI(self):
-        """
-        Initialize the window and display its contents to the screen.
-        """
         self.setGeometry(100, 100, 250, 250)
-        self.setWindowTitle('QLabel Example')
+        self.setWindowTitle('Qlabel Example')
         self.displayLabels()
 
         self.show()
 
     def displayLabels(self):
-        """
-        Display text and images using QLabels.
-
-        Check to see if image files exist, if not throw an exception.
-        """
         text = QLabel(self)
         text.setText("Hello")
         text.move(105, 15)
-
         image = "images/world.png"
         try:
             with open(image):
@@ -48,8 +31,7 @@ class EmptyWindow(QWidget):
             print("Image not found.")
 
 
-# Run program
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = EmptyWindow()
+    window = HelloWorldWindow()
     sys.exit(app.exec_())
